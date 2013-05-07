@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<actionScriptProperties 
+	analytics="false"
+	mainApplicationPath="$mainApplication"
+	projectUUID="$projectUUID"
+	version="$ideVersion"
+	>
+
+	<compiler
+#if( $flexSDK != "default" )
+		flexSDK="$flexSDK"
+#end 
+		additionalCompilerArguments="$!additionalCompilerArguments"
+		autoRSLOrdering="true"
+		copyDependentFiles="true"
+		fteInMXComponents="false" 
+		generateAccessible="$accessible" 
+		htmlExpressInstall="$htmlExpressInstall" 
+		htmlGenerate="$htmlGenerate" 
+		htmlHistoryManagement="$htmlHistoryManagement"
+		htmlPlayerVersionCheck="$htmlPlayerVersionCheck"
+		includeNetmonSwc="false"
+		outputFolderPath="$ideOutputFolderPath" 
+		sourceFolderPath="$mainSources" 
+		strict="$strict"
+#if ($useApolloConfig)
+		targetPlayerVersion="0.0.0"
+#else
+		targetPlayerVersion="$targetPlayer"
+#end
+		useApolloConfig="$useApolloConfig"
+		useDebugRSLSwfs="$debug"
+		removeUnusedRSL="true"
+		verifyDigests="$verifyDigests" 
+		warn="$showWarnings"
+		>
+
+		<compilerSourcePath>
+#foreach ($path in $sources)
+			<compilerSourcePathEntry 
+				kind="1" 
+				linkType="1" 
+				path="$path"
+				/>
+#end 
+		</compilerSourcePath>
+
+		<libraryPath
+			defaultLinkType="$libraryPathDefaultLinkType">
+			
+#foreach ($artifact in $dependencies)
+			<!-- artifact: $artifact -->
+			<libraryPathEntry
+#if ($artifact.getScope() == "rsl")
+				autoExtract="$autoExtract"
+				rslUrl="$artifact.getRslUrl('swf')"
+#end 
+				kind="3" 
+				linkType="$artifact.getLinkTypeId()" 
+				path="$artifact.getPath()"
+#if ($artifact.getSourcePath())
+				sourcepath="$artifact.getSourcePath()"
+#end
+				useDefaultLinkType="false"
+				/>
+
+#end
+			<libraryPathEntry kind="4" path="">
+				<modifiedEntries>
+#foreach ($modified in $sdkMods)
+#if ($modified.getLinkTypeId() == 4)
+					<libraryPathEntry
+						kind="3"
+						linkType="$modified.getLinkTypeId()"
+						path="$modified.getPath()"
+						sourcepath="$modified.getSourcePath()"
+						useDefaultLinkType="false">
+						<crossDomainRsls>
+							<crossDomainRslEntry autoExtract="$autoExtract" policyFileUrl="$modified.getPolicyFileUrl()" rslUrl="$modified.getRslUrl('swz')" />
+							<crossDomainRslEntry autoExtract="$autoExtract" policyFileUrl="$modified.getPolicyFileUrl()" rslUrl="$modified.getRslUrl('swf')" />
+						</crossDomainRsls>
+					</libraryPathEntry>
+#else
+					<libraryPathEntry
+						kind="3"
+						linkType="$modified.getLinkTypeId()"
+						path="$modified.getPath()"
+#if ($modified.getLinkTypeId() == 3)
+						autoExtract="$autoExtract"
+						rslUrl="$modified.getRslUrl('swf')"
+#end
+						useDefaultLinkType="false" />
+#end
+#end
+				</modifiedEntries>
+				<excludedEntries>
+#foreach ($exclude in $sdkExcludes)
+					<libraryPathEntry kind="3" linkType="1" path="$exclude.getPath()" useDefaultLinkType="false" />
+#end
+				</excludedEntries>
+			</libraryPathEntry>
+		</libraryPath>
+
+		<sourceAttachmentPath>
+#foreach ($artifact in $dependencies)
+#if ($artifact.getSourcePath())
+			<sourceAttachmentPathEntry
+				kind="3"
+				linkType="$artifact.getLinkTypeId()"
+				path="$artifact.getPath()"
+				sourcepath="$artifact.getSourcePath()"
+				useDefaultLinkType="false" />
+#end 
+#end        
+		</sourceAttachmentPath>
+	</compiler>
+
+    <applications>
+#foreach ($application in $applications)
+		<application path="$application" />
+#end
+    </applications>
+
+	<modules>
+#foreach($module in $moduleFiles)
+		<module application="$mainSources/$mainApplication" 
+			destPath="$module.replace('mxml', 'swf')" 
+			optimize="true" 
+			sourcePath="$mainSources/$module"/>
+#end
+	</modules>
+    <theme themeIsDefault="false" themeIsSDK="true" themeLocation="$themeLocation"  />
+	<buildCSSFiles>
+#foreach( $cssfile in $cssfiles )
+		<buildCSSFileEntry destPath="$ideOutputFolderPath" sourcePath="$cssfile" />
+#end
+	</buildCSSFiles>
+	<flashCatalyst validateFlashCatalystCompatibility="false"/>
+</actionScriptProperties>

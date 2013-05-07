@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	The Copyright (C) pureart.org All rights reserved.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.pureart.maven.plugins</groupId>
+	<artifactId>flexworks-parent</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Flexworks Parent</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+ 		<flexmojos.version>4.0-RC2</flexmojos.version>
+		<!--<flexmojos.version>4.1-beta</flexmojos.version>-->
+		<maven.version>3.0.3</maven.version>
+	</properties>
+
+	<prerequisites>
+		<maven>${maven.version}</maven>
+	</prerequisites>
+
+	<licenses>
+		<license>
+			<name>ASF</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>keyhom</id>	
+			<name>KeyHom.Chen</name>
+			<email>keyhom.c at gmail</email>
+			<roles>
+				<role>Author Developer</role>
+			</roles>
+			<timezone>+8</timezone>
+		</developer>	
+	</developers>
+
+	<issueManagement>
+		<system>jira</system>
+		<url>http://issues.pureart.org/flexworks</url>
+	</issueManagement>
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>Flexworks Release Repository</name>
+			<url>http://www.pureart.org:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Flexworks Snapshot Repository</name>
+			<url>http://www.pureart.org:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<site>
+			<id>flexworks-site</id>
+			<name>Flexworks Site</name>
+			<url>dav:https://sites.pureart.org/flexworks</url>
+		</site>
+	</distributionManagement>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<version>2.5</version>
+				<configuration>
+					<targetJdk>1.6</targetJdk>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.7</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<modules>
+		<module>flexworks-maven-plugin</module>
+		<!--<module>flexworks-super-poms</module>-->
+	</modules>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.9</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.ops4j</groupId>
+										<artifactId>
+											maven-inherit-plugin
+										</artifactId>
+										<versionRange>
+											[1.5,)
+										</versionRange>
+										<goals>
+											<goal>inherit</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.plexus
+										</groupId>
+										<artifactId>
+											plexus-component-metadata
+										</artifactId>
+										<versionRange>
+											[1.5.5,)
+										</versionRange>
+										<goals>
+											<goal>merge-metadata</goal>
+											<goal>
+												generate-test-metadata
+											</goal>
+											<goal>
+												generate-metadata
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

@@ -1,0 +1,81 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.pureart.flexworks</groupId>
+	<artifactId>flexworks-super-poms</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Flexworks Super Poms</name>
+
+	<properties>
+		<flexworks.version>1.0-SNAPSHOT</flexworks.version>
+		<flexworks.debug>true</flexworks.debug>
+		<flexmojos.version>4.0-SNAPSHOT</flexmojos.version>
+		<flex.sdk.version>4.5.0.17689</flex.sdk.version>
+	</properties>
+
+	<prerequisites>
+		<maven>3.0.3</maven>
+	</prerequisites>
+
+	<build>
+		<sourceDirectory>src/main/flex</sourceDirectory>
+		<testSourceDirectory>src/test/flex</testSourceDirectory>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.pureart.maven.plugins
+										</groupId>
+										<artifactId>
+											flexworks-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.0-SNAPSHOT,)
+										</versionRange>
+										<goals>
+											<goal>compileSwf</goal>
+											<goal>compileSwc</goal>
+											<goal>testCompile</goal>
+											<goal>testSwf</goal>
+											<goal>testSwc</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.pureart.maven.plugins</groupId>
+					<artifactId>flexworks-maven-plugin</artifactId>
+					<version>${flexworks.version}</version>
+					<extensions>true</extensions>
+					<dependencies>
+						<dependency>
+							<groupId>com.adobe.flex</groupId>
+							<artifactId>compiler</artifactId>
+							<version>${flex.sdk.version}</version>
+							<type>pom</type>
+						</dependency>
+					</dependencies>
+					<configuration>
+						<debug>${flexworks.debug}</debug>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

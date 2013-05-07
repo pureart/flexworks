@@ -1,0 +1,16 @@
+# Eclipse ignores.
+.project
+.classpath
+.settings/
+
+# Maven ignores.
+target/
+
+# Intellij Idea ignores.
+*.iml
+.idea/
+*.iws
+
+# Svn ignores.
+.svn/
+
